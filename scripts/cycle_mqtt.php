@@ -23,7 +23,7 @@ if ($mqtt->config['MQTT_CLIENT']) {
 } else {
     $client_name = "MajorDoMo MQTT Cycle";
 }
-//$client_name = $client_name . ' (#' . uniqid() . ')';
+$client_name = $client_name . uniqid();
 
 if ($mqtt->config['MQTT_AUTH']) {
     $username = $mqtt->config['MQTT_USERNAME'];
@@ -84,6 +84,7 @@ foreach ($topics as $k => $v) {
 }
 $checked_time = time();
 
+$all_topics = array();
 while ($mqtt_client->proc()) {
 
     /*
@@ -117,9 +118,15 @@ $mqtt_client->close();
  * @return void
  */
 function procmsg($topic, $msg) {
+    global $all_topics;
     //$url = BASE_URL . '/ajax/mqtt.html?op=process&topic='.urlencode($topic)."&msg=".urlencode($msg);
     //getURLBackground($url);
     if (!isset($topic) || !isset($msg)) return false;
-    callAPI('/api/module/mqtt','GET',array('topic'=>$topic,'msg'=>$msg));
+    if (!isset($all_topics[$topic]) or $all_topics[$topic] != $msg) {
+        $all_topics[$topic] = $msg;
+        callAPI('/api/module/mqtt','GET',array('topic'=>$topic,'msg'=>$msg));
+    
+    }
+    //DebMes($all_topics);
 }
 
