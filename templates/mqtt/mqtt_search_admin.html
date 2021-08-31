@@ -1,6 +1,6 @@
 <div class="row" style="margin-right: -15px;margin-left: -15px;">
 	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-		<div class="btn-[#if MQTT_STATUS==1#]success[#else#]danger[#endif#]">
+		<div class="">
 			[#module name="xray" action="service" cycle="mqtt"#]
 		</div>
 	</div>
@@ -68,7 +68,6 @@
 				    <input type="checkbox" name="mqtt_log" style="height: 20px;width: 20px;" value="1" [#if MQTT_LOG="1" #] checked[#endif#]>
 				</div>
 			</div>
-				
 			<div class="form-group " style="margin-right: 0px;margin-left: 0px;">
 				<label class="col-lg-2 col-md-4" style="max-width: 240px;float: left;padding: 5px 10px 0px 0px;text-align: right;">
 					<#LANG_NEW_MQTT_REQ_AUTH#>:
@@ -244,7 +243,8 @@
 		</script>
 		<ul id="LinkedList1" class="LinkedList" style="padding-left: 0px;">
 			[#begin RESULT#]
-			<li style="list-style-type: none; color:[#COLOR#]" title="[#TITLE#]" onmouseout="$(this).find('.delIcon').hide().removeClass('text-danger');" onmouseover="$(this).find('.delIcon').show().addClass('text-danger');">
+			<li style="list-style-type: none; color:[#COLOR#]" title="[#TITLE#]" onmouseout="$(this).find('.delIcon_[#ID#]').hide().removeClass('text-danger');" onmouseover="$(this).find('.delIcon_[#ID#]').show().addClass('text-danger');">
+
 				[#if RESULT#]<i class="glyphicon glyphicon-folder-close" style="font-size: 1.2rem;"></i>[#else#]<i class="glyphicon glyphicon-arrow-right" style="font-size: 1.2rem;color: #ddd;"></i>[#endif RESULT#]
 				[#if ID!=""#]
 				
@@ -257,7 +257,8 @@
 				&nbsp;[#TITLE#]
 				[#endif#]
 				
-				<a href="?view_mode=delete_path&path=[#PATH_URL#]" onclick="return confirm('<#LANG_ARE_YOU_SURE#>');"><i style="display: none;" class="glyphicon glyphicon-remove delIcon"></i></a>
+<a href="?view_mode=delete_path&path=[#PATH_URL#]" onclick="return confirm('<#LANG_ARE_YOU_SURE#>');"><i style="display: none;" class="glyphicon glyphicon-remove delIcon_[#ID#]"></i></a>
+
 				[#if RESULT#]<ul [#if IS_VISIBLE!="1" #] style="display:none" [#endif#]>[#tree RESULT#]</ul>[#endif RESULT#]
 			</li>
 			[#end RESULT#]

@@ -102,9 +102,9 @@ while ($mqtt_client->proc()) {
         $checked_time = time();
         setGlobal((str_replace('.php', '', basename(__FILE__))) . 'Run', $checked_time, 1);
     }
-     if (file_exists('./reboot') || IsSet($_GET['onetime'])) {
+    if (file_exists('./reboot') || IsSet($_GET['onetime'])) {
 			
-		$mqtt_client->close();
+		    $mqtt_client->close();
         exit;
     }
 }

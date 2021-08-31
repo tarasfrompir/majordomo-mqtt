@@ -10,7 +10,14 @@
 			<#LANG_FILLOUT_REQURED#>
 		</div>
 		[#endif ERR#]
-			
+	
+		<script>
+		$(window).load(function() {
+			//Вставляем данные в бредкрумбс
+			$('.breadcrumb:eq(0)').append('<li style="color: gray;">[#TITLE#]</li>');
+		});
+		</script>
+      
         <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal" style="border: 1px solid #f2f2f2;padding: 10px;border-radius: 5px;">
 			<div class="form-group " style="margin-right: 0px;margin-left: 0px;">
 				<label class="col-lg-2 col-md-4" style="max-width: 240px;float: left;padding: 5px 10px 0px 0px;text-align: right;[#if ERR_PATH#]color:red;font-weight:bold[#endif#]"><#LANG_PATH#>: <font color="red">*</font></label>
