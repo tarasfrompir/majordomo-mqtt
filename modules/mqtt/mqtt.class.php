@@ -396,7 +396,7 @@ class mqtt extends module
             }
             if ($rec['LINKED_OBJECT'] && $rec['LINKED_METHOD'] &&
              !(strtolower($rec['LINKED_PROPERTY'])=='status' && strtolower($rec['LINKED_METHOD'])=='switch')) {
-                callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], array('VALUE'=>$rec['VALUE'],'NEW_VALUE'=>$rec['VALUE'],'OLD_VALUE'=>$old_value));
+                callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], array('VALUE'=>$rec['VALUE'],'OLD_VALUE'=>$old_value));
             }
 
         }
@@ -442,6 +442,8 @@ class mqtt extends module
         if (!$out['MQTT_HOST']) {
             $out['MQTT_HOST'] = 'localhost';
         }
+        $out['MQTT_LOG'] = $this->config['MQTT_LOG'];
+        
         if (!$out['MQTT_PORT']) {
             $out['MQTT_PORT'] = '1883';
         }
@@ -452,6 +454,7 @@ class mqtt extends module
         $out['MQTT_USERNAME'] = $this->config['MQTT_USERNAME'];
         $out['MQTT_PASSWORD'] = $this->config['MQTT_PASSWORD'];
         $out['MQTT_AUTH'] = $this->config['MQTT_AUTH'];
+        $out['MQTT_STATUS'] = $this->config['MQTT_STATUS'];
 
         if ($this->view_mode == 'update_settings') {
             global $mqtt_client;
@@ -461,12 +464,14 @@ class mqtt extends module
             global $mqtt_auth;
             global $mqtt_port;
             global $mqtt_query;
+            global $mqtt_log;
 
             $this->config['MQTT_CLIENT'] = trim($mqtt_client);
             $this->config['MQTT_HOST'] = trim($mqtt_host);
             $this->config['MQTT_USERNAME'] = trim($mqtt_username);
             $this->config['MQTT_PASSWORD'] = trim($mqtt_password);
             $this->config['MQTT_AUTH'] = (int)$mqtt_auth;
+            $this->config['MQTT_LOG'] = (int)$mqtt_log;
             $this->config['MQTT_PORT'] = (int)$mqtt_port;
             $this->config['MQTT_QUERY'] = trim($mqtt_query);
             $this->saveConfig();
@@ -579,6 +584,7 @@ class mqtt extends module
         }
         $this->admin($out);
     }
+
 
     /**
      * mqtt search
